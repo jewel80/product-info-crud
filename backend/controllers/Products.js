@@ -34,6 +34,8 @@ export const createProduct = async (req, res) => {
 }
  
 export const updateProduct = async (req, res) => {
+    console.log(req.params.id);
+    console.log(req.body);
     try {
         await Product.update(req.body, {
             where: {
