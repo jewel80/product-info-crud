@@ -4,6 +4,7 @@ import axios from "axios";
 import { useHistory, useParams } from 'react-router-dom';
  
 const EditProduct = () => {
+    const [name, setName] = useState('');
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const history = useHistory();
@@ -12,6 +13,7 @@ const EditProduct = () => {
     const updateProduct = async (e) => {
         e.preventDefault();
         await axios.patch(`http://localhost:5000/products/${id}`,{
+            name: name,
             title: title,
             price: price
         });
@@ -24,6 +26,7 @@ const EditProduct = () => {
  
     const getProductById = async () => {
         const response = await axios.get(`http://localhost:5000/products/${id}`);
+        setName(response.data.name);
         setTitle(response.data.title);
         setPrice(response.data.price);
     }
@@ -31,6 +34,16 @@ const EditProduct = () => {
     return (
         <div>
             <form onSubmit={ updateProduct }>
+            <div className="field">
+                    <label className="label">Name</label>
+                    <input 
+                        className="input"
+                        type="text"
+                        placeholder="Title"
+                        value={ name }
+                        onChange={ (e) => setName(e.target.value) }
+                    />
+                </div>
                 <div className="field">
                     <label className="label">Title</label>
                     <input 
